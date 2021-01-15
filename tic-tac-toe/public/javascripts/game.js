@@ -2,10 +2,16 @@ let marks = {
   X: "images/x.png",
   O: "images/o.png",
 };
-let turn;
+let gameState;
+
+class GameState {
+  constructor() {
+    this.turn = 0;
+  }
+}
 
 window.addEventListener("DOMContentLoaded", () => {
-  turn = 0;
+  gameState = new GameState();
 
   //register event listener on all squares
   let squareElements = document.getElementsByClassName("square");
@@ -20,11 +26,11 @@ window.addEventListener("DOMContentLoaded", () => {
  */
 function onSquareClick(clickEvent) {
   console.log(
-    `Turn ${turn}: Click on square ${clickEvent.target.id}: `,
+    `Turn ${gameState.turn}: Click on square ${clickEvent.target.id}: `,
     clickEvent
   );
 
-  let imgSrc = turn % 2 ? marks.O : marks.X;
+  let imgSrc = gameState.turn % 2 ? marks.O : marks.X;
   // remove innerhtml
   clickEvent.target.innerHTML = "";
 
@@ -34,5 +40,5 @@ function onSquareClick(clickEvent) {
   element.setAttribute("height", 100);
   element.classList.add("game-mark");
   clickEvent.target.append(element);
-  turn += 1;
+  gameState.turn += 1;
 }
