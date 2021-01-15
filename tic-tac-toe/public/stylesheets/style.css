@@ -1,35 +1,27 @@
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; }
 
 a {
-  color: #00b7ff;
-}
+  color: #00B7FF; }
 
 .game-board {
   height: 500px;
   width: 500px;
   display: grid;
-  grid-template: 1fr 1fr 1fr / 1fr 1fr 1fr;
-}
+  grid-template: 1fr 1fr 1fr / 1fr 1fr 1fr; }
 
 .game-mark {
   align-content: center;
-  margin: auto;
-}
+  margin: auto; }
 
 .square {
   padding: 10px;
-  display: flex;
-}
-.square:nth-child(3n + 2),
-.square:nth-child(3n) {
-  border-left: 1px solid grey;
-}
+  display: flex; }
+  .square:nth-child(3n+2), .square:nth-child(3n) {
+    border-left: 1px solid grey; }
 
-.square:nth-child(-n + 6) {
-  border-bottom: 1px solid grey;
-}
+.square:nth-child(-n+6) {
+  border-bottom: 1px solid grey; }
 
 /*# sourceMappingURL=style.css.map */

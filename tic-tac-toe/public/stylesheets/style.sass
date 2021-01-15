@@ -12,9 +12,14 @@ a
   display: grid
   grid-template: 1fr 1fr 1fr / 1fr 1fr 1fr
 
+.game-mark 
+  align-content: center;
+  margin: auto;
+
+
 .square
   padding: 10px;
-
+  display: flex;
   &:nth-child(3n+2),
   &:nth-child(3n)
     border-left: 1px solid grey
