@@ -3,6 +3,11 @@ window.addEventListener("DOMContentLoaded", () => {
   //Register a click action on the start button.  Use that to start the game
   let startBtn = document.getElementById("startBtn");
   startBtn.addEventListener("click", startGame);
+
+  let holeElements = document.getElementsByClassName("hole");
+  for (let element of Array.from(holeElements)) {
+    element.addEventListener("click", onHoleClick);
+  }
 });
 
 /** Returns a random integer between and up to start and end values */
@@ -10,10 +15,16 @@ function randomInt(start, end) {
   return Math.floor(Math.random() * end + start);
 }
 
+let gameRunner;
+const popUpInterval = 1000;
+
 function startGame() {
   //make a random mole appear for a random time
+  clearInterval(gameRunner);
   resetScore();
-  popUpMole();
+  gameRunner = setInterval(() => {
+    popUpMole();
+  }, popUpInterval);
 }
 
 /** Pop up a random mole for a random time after a random delay */
@@ -38,6 +49,15 @@ async function popUpMole() {
 /** Sleep Function for async timeouts */
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function onHoleClick(clickEvent) {
+  let isMole = [...clickEvent.target.classList].includes("mole");
+  console.log("Mole?", isMole);
+
+  if (isMole) {
+    increaseScore();
+  }
 }
 
 /**
