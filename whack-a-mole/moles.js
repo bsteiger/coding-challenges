@@ -12,6 +12,7 @@ function randomInt(start, end) {
 
 function startGame() {
   //make a random mole appear for a random time
+  resetScore();
   popUpMole();
 }
 
@@ -55,4 +56,18 @@ function holeUp(hole) {
 function holeDown(hole) {
   let element = document.getElementsByClassName(`hole${hole}`);
   element[0].classList.remove("up");
+}
+
+function getScoreElement() {
+  let els = document.getElementsByClassName("score");
+  return els[0];
+}
+
+function increaseScore() {
+  let scoreboard = getScoreElement();
+  scoreboard.innerText = +scoreboard.innerText + 1;
+}
+function resetScore() {
+  let scoreboard = getScoreElement();
+  scoreboard.innerText = 0;
 }
