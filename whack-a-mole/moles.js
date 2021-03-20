@@ -1,8 +1,13 @@
+//Globals
+let gameRunner = {
+  interval: null,
+  running: false,
+};
+const popUpInterval = 1000;
+
 window.addEventListener("DOMContentLoaded", () => {
-  console.log("Hi i loaded.");
-  //Register a click action on the start button.  Use that to start the game
   let startBtn = document.getElementById("startBtn");
-  startBtn.addEventListener("click", startGame);
+  startBtn.addEventListener("click", onStartClick);
 
   let holeElements = document.getElementsByClassName("hole");
   for (let element of Array.from(holeElements)) {
@@ -15,16 +20,32 @@ function randomInt(start, end) {
   return Math.floor(Math.random() * end + start);
 }
 
-let gameRunner;
-const popUpInterval = 1000;
+/** Stuff to do when start button is clicked */
+function onStartClick() {
+  let btn = document.getElementById("startBtn");
+  if (!gameRunner.running) {
+    startGame();
+    btn.innerText = "Stop!";
+  } else {
+    stopGame();
+    btn.innerText = "Start!";
+  }
+}
 
+function stopGame() {
+  clearInterval(gameRunner.interval);
+  gameRunner.running = false;
+}
+
+/** Reset the score and start a new game */
 function startGame() {
-  //make a random mole appear for a random time
-  clearInterval(gameRunner);
+  stopGame();
   resetScore();
-  gameRunner = setInterval(() => {
+  gameRunner.interval = setInterval(() => {
     popUpMole();
   }, popUpInterval);
+  console.log(gameRunner);
+  gameRunner.running = true;
 }
 
 /** Pop up a random mole for a random time after a random delay */
@@ -34,10 +55,6 @@ async function popUpMole() {
   const upDelay = randomInt(0, 2000);
   let upTime = randomInt(minTimeUp, maxTimeUp);
   let hole = randomInt(1, 6);
-
-  console.log(
-    `Going to pop up hole ${hole} for ${upTime}ms after a ${upDelay}ms delay`
-  );
 
   await sleep(upDelay);
   holeUp(hole);
@@ -53,10 +70,13 @@ function sleep(ms) {
 
 function onHoleClick(clickEvent) {
   let isMole = [...clickEvent.target.classList].includes("mole");
-  console.log("Mole?", isMole);
+  let alreadyClicked = [...clickEvent.target.classList].includes("clicked");
 
   if (isMole) {
-    increaseScore();
+    if (!alreadyClicked) {
+      clickEvent.target.classList.add("clicked");
+      increaseScore();
+    }
   }
 }
 
@@ -70,12 +90,16 @@ function holeUp(hole) {
 }
 
 /**
- * Set a hole to be down
+ * Set a hole to be down and reset props
  * @param {Number} hole
  */
 function holeDown(hole) {
+  let resetDelay = 400; //This is set to the same value as up animation length
   let element = document.getElementsByClassName(`hole${hole}`);
   element[0].classList.remove("up");
+  setTimeout(() => {
+    element[0].children[0].classList.remove("clicked");
+  }, resetDelay);
 }
 
 function getScoreElement() {
