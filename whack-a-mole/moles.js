@@ -4,6 +4,8 @@ let gameRunner = {
   running: false,
 };
 const popUpInterval = 1000;
+const upTimeBounds = [300, 600];
+const maxUpDelay = 2000;
 
 window.addEventListener("DOMContentLoaded", () => {
   let startBtn = document.getElementById("startBtn");
@@ -50,10 +52,8 @@ function startGame() {
 
 /** Pop up a random mole for a random time after a random delay */
 async function popUpMole() {
-  let minTimeUp = 300;
-  let maxTimeUp = 1000;
-  const upDelay = randomInt(0, 2000);
-  let upTime = randomInt(minTimeUp, maxTimeUp);
+  const upDelay = randomInt(0, maxUpDelay);
+  let upTime = randomInt(...upTimeBounds);
   let hole = randomInt(1, 6);
 
   await sleep(upDelay);
