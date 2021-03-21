@@ -75,15 +75,13 @@ function onHoleClick(clickEvent) {
   let isMole = [...clickEvent.target.classList].includes("mole");
   let alreadyClicked = [...clickEvent.target.classList].includes("clicked");
   if (isMole && !alreadyClicked) {
-    console.log(clickEvent);
     clickEvent.target.classList.add("clicked");
     clickEvent.target.parentElement.classList.remove("up");
     increaseScore();
   }
 }
 
-/**
- * Set a hole to be up
+/** Set a hole to be up
  * @param {Number} hole
  */
 function holeUp(hole) {
@@ -91,8 +89,7 @@ function holeUp(hole) {
   element[0].classList.add("up");
 }
 
-/**
- * Set a hole to be down and reset props
+/** Set a hole to be down and reset props
  * @param {Number} hole
  */
 function holeDown(hole) {
