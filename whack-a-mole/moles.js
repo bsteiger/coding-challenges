@@ -74,12 +74,11 @@ function sleep(ms) {
 function onHoleClick(clickEvent) {
   let isMole = [...clickEvent.target.classList].includes("mole");
   let alreadyClicked = [...clickEvent.target.classList].includes("clicked");
-
-  if (isMole) {
-    if (!alreadyClicked) {
-      clickEvent.target.classList.add("clicked");
-      increaseScore();
-    }
+  if (isMole && !alreadyClicked) {
+    console.log(clickEvent);
+    clickEvent.target.classList.add("clicked");
+    clickEvent.target.parentElement.classList.remove("up");
+    increaseScore();
   }
 }
 
@@ -114,6 +113,7 @@ function increaseScore() {
   let scoreboard = getScoreElement();
   scoreboard.innerText = +scoreboard.innerText + 1;
 }
+
 function resetScore() {
   let scoreboard = getScoreElement();
   scoreboard.innerText = 0;
