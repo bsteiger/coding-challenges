@@ -44,7 +44,7 @@ function startGame() {
   gameRunner.interval = setInterval(() => {
     popUpMole();
   }, popUpInterval);
-  console.log(gameRunner);
+  console.log("Game Started");
   gameRunner.running = true;
 }
 
@@ -57,6 +57,9 @@ async function popUpMole() {
   let hole = randomInt(1, 6);
 
   await sleep(upDelay);
+
+  if (!gameRunner.running) return;
+
   holeUp(hole);
   setTimeout(() => {
     holeDown(hole);
