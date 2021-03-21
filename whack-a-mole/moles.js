@@ -1,10 +1,15 @@
 //Globals
-let gameRunner = {
+let game = {
   interval: null,
   running: false,
   score: 0,
+  config: {
+    popUpInterval: 1000,
+    minTimeUp: 300,
+    maxTimeUp: 1000,
+    maxDelay: 2000,
+  },
 };
-const popUpInterval = 1000;
 
 window.addEventListener("DOMContentLoaded", () => {
   let startBtn = document.getElementById("startBtn");
@@ -24,7 +29,7 @@ function randomInt(start, end) {
 /** Stuff to do when start button is clicked */
 function onStartClick() {
   let btn = document.getElementById("startBtn");
-  if (!gameRunner.running) {
+  if (!game.running) {
     startGame();
     btn.innerText = "Stop!";
   } else {
@@ -34,32 +39,30 @@ function onStartClick() {
 }
 
 function stopGame() {
-  clearInterval(gameRunner.interval);
-  gameRunner.running = false;
+  clearInterval(game.interval);
+  game.running = false;
 }
 
 /** Reset the score and start a new game */
 function startGame() {
   stopGame();
   resetScore();
-  gameRunner.interval = setInterval(() => {
+  game.interval = setInterval(() => {
     popUpMole();
-  }, popUpInterval);
+  }, game.config.popUpInterval);
   console.log("Game Started");
-  gameRunner.running = true;
+  game.running = true;
 }
 
 /** Pop up a random mole for a random time after a random delay */
 async function popUpMole() {
-  let minTimeUp = 300;
-  let maxTimeUp = 1000;
-  const upDelay = randomInt(0, 2000);
-  let upTime = randomInt(minTimeUp, maxTimeUp);
+  let upDelay = randomInt(0, game.config.maxDelay);
+  let upTime = randomInt(game.config.minTimeUp, game.config.maxTimeUp);
   let hole = randomInt(1, 6);
 
   await sleep(upDelay);
 
-  if (!gameRunner.running) return;
+  if (!game.running) return;
 
   holeUp(hole);
   setTimeout(() => {
@@ -110,15 +113,15 @@ function getScoreElement() {
 
 function updateScore() {
   let scoreboard = getScoreElement();
-  scoreboard.innerText = gameRunner.score;
+  scoreboard.innerText = game.score;
 }
 
 function increaseScore() {
-  gameRunner.score += 1;
+  game.score += 1;
   updateScore();
 }
 
 function resetScore() {
-  gameRunner.score = 0;
+  game.score = 0;
   updateScore();
 }
