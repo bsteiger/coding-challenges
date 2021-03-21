@@ -2,6 +2,7 @@
 let gameRunner = {
   interval: null,
   running: false,
+  score: 0,
 };
 const popUpInterval = 1000;
 
@@ -75,6 +76,7 @@ function onHoleClick(clickEvent) {
   let isMole = [...clickEvent.target.classList].includes("mole");
   let alreadyClicked = [...clickEvent.target.classList].includes("clicked");
   if (isMole && !alreadyClicked) {
+    console.log("GOT EM");
     clickEvent.target.classList.add("clicked");
     clickEvent.target.parentElement.classList.remove("up");
     increaseScore();
@@ -106,12 +108,17 @@ function getScoreElement() {
   return els[0];
 }
 
-function increaseScore() {
+function updateScore() {
   let scoreboard = getScoreElement();
-  scoreboard.innerText = +scoreboard.innerText + 1;
+  scoreboard.innerText = gameRunner.score;
+}
+
+function increaseScore() {
+  gameRunner.score += 1;
+  updateScore();
 }
 
 function resetScore() {
-  let scoreboard = getScoreElement();
-  scoreboard.innerText = 0;
+  gameRunner.score = 0;
+  updateScore();
 }
