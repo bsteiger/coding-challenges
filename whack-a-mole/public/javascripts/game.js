@@ -7,9 +7,9 @@ let game = {
   config: {
     molesPerGame: 20,
     popUpInterval: 1000,
-    minTimeUp: 300,
+    minTimeUp: 500,
     maxTimeUp: 1000,
-    maxDelay: 2000,
+    maxDelay: 1800,
   },
 };
 
