@@ -17,9 +17,9 @@ window.addEventListener("DOMContentLoaded", () => {
   let startBtn = document.getElementById("startBtn");
   startBtn.addEventListener("click", onStartClick);
 
-  let holeElements = document.getElementsByClassName("hole");
-  for (let element of Array.from(holeElements)) {
-    element.addEventListener("click", onHoleClick);
+  let holes = document.getElementsByClassName("hole");
+  for (let hole of holes) {
+    hole.addEventListener("click", onHoleClick);
   }
 });
 
@@ -88,8 +88,8 @@ function sleep(ms) {
 }
 
 function onHoleClick(clickEvent) {
-  let isMole = [...clickEvent.target.classList].includes("mole");
-  let alreadyClicked = [...clickEvent.target.classList].includes("clicked");
+  let isMole = clickEvent.target.classList.contains("mole");
+  let alreadyClicked = clickEvent.target.classList.contains("clicked");
   if (isMole && !alreadyClicked) {
     console.log("GOT EM");
     clickEvent.target.classList.add("clicked");
