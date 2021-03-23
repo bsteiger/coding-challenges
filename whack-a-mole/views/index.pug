@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  h1 Whack-a-mole!
+    span.score 0
+  div.btn-container
+    button.btn#startBtn Start!
+  div.game
+    each val in [1, 2, 3, 4, 5, 6]
+      div(class=`hole hole${val}`)
+        div.mole
