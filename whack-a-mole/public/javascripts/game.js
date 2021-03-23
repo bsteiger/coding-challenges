@@ -3,7 +3,9 @@ let game = {
   interval: null,
   running: false,
   score: 0,
+  moleCount: 0,
   config: {
+    molesPerGame: 20,
     popUpInterval: 1000,
     minTimeUp: 300,
     maxTimeUp: 1000,
@@ -46,10 +48,19 @@ function stopGame() {
 
 /** Reset the score and start a new game */
 function startGame() {
-  stopGame();
   resetScore();
   game.interval = setInterval(() => {
+    if (game.moleCount == game.config.molesPerGame) {
+      onStartClick();
+      console.log(
+        `Game has ended. Final score: ${game.score}/${game.moleCount} (${
+          (game.score / game.moleCount) * 100
+        }%)`
+      );
+      return;
+    }
     popUpMole();
+    game.moleCount++;
   }, game.config.popUpInterval);
   console.log("Game Started");
   game.running = true;
@@ -123,6 +134,7 @@ function increaseScore() {
 }
 
 function resetScore() {
+  game.moleCount = 0;
   game.score = 0;
   updateScore();
 }
