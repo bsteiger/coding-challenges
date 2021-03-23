@@ -23,7 +23,8 @@ window.addEventListener("DOMContentLoaded", () => {
 
 /** Returns a random integer between and up to start and end values */
 function randomInt(start, end) {
-  return Math.floor(Math.random() * end + start);
+  let range = end - start;
+  return Math.round(Math.random() * range + start);
 }
 
 /** Stuff to do when start button is clicked */
